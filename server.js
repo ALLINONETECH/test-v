@@ -203,10 +203,10 @@ app.get("/recordings/get/:userId", async (req, res) => {
     console.log('recordings',recordings)
     res.json(
       recordings.map((item) => {
-        // const pitchArray = JSON.parse(item.pitchData.replace(/\n/g, "").trim());
+        const pitchArray = JSON.parse(item.pitchData.replace(/\n/g, "").trim());
         return {
           ...item._doc,
-          // pitchData: pitchArray,
+          pitchData: pitchArray,
         };
       })
     );
@@ -692,7 +692,7 @@ app.put("/segment/update/:id", async (req, res) => {
 
 app.get("/segments/get/:userId/:recordingId", async (req, res) => {
   try {
-    const { recordingId } = req.params;
+    const { recordingId,userId } = req.params;
     const segments = await Segment.find({ recordingId, userId });
     res.send(segments);
   } catch (error) {
